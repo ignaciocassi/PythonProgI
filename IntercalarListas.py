@@ -22,10 +22,6 @@ def intercalarListas3(listaA,listaB): #con rebanadas
         contador+=2
         inicio+=1
 
-def intercalarListas4(listaA,listaB):
-    listaC=[elemento for elemento in listaB,listaA]
-    return listaC
-
 def __main__():
     listaA=[1,2,3]
     listaB=[7,8,9]
