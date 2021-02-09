@@ -1,4 +1,8 @@
 from random import randint
+import os
+
+def clear():
+    os.system("cls")
 
 """TP2EJ3 Crear una lista con los cuadrados de los números entre 1 y N (ambos incluidos),
 donde N se ingresa desde el teclado. Luego se solicita imprimir los últimos 10 valores de la lista."""
@@ -83,6 +87,60 @@ def ordenarFilasMatriz(matriz):
     for fila in range(len(matriz)):
         matriz[fila].sort()
 
+def intercambiarFilas(matriz):
+    while True:
+        try:
+            mostrarMatriz(matriz)
+            print("")
+            print("La matriz tiene "+str(len(matriz))+" filas: "+str([numero for numero in range(0,(len(matriz)))]))
+            print("")
+            filaA=int(input("Ingrese una fila para intercambiarla con otra: "))
+            filaB=int(input("Ingrese la otra fila: "))
+            matriz[filaA],matriz[filaB]=matriz[filaB],matriz[filaA]
+            break
+        except ValueError:
+            print("Deben ingresarse números, reintente... ")
+        except IndexError:
+            print("Las filas ingresadas no existen, reintente... ")
+    
+def intercambiarColumnas(matriz):
+    while True:
+        try:
+            mostrarMatriz(matriz)
+            print("")
+            print("La matriz tiene "+str(len(matriz[0]))+" columnas: "+str([numero for numero in range(0,(len(matriz[0])))]))
+            print("")
+            columnaA=int(input("Ingrese una fila para intercambiarla con otra: "))
+            columnaB=int(input("Ingrese la otra fila: "))
+            for fila in range(len(matriz)):
+                matriz[fila][columnaA],matriz[fila][columnaB]=matriz[fila][columnaB],matriz[fila][columnaA]
+            break
+        except ValueError:
+            print("Deben ingresarse números, reintente... ")
+        except IndexError:
+            print("Las filas ingresadas no existen, reintente... ")
+
+def intercambiarColumnasComplicado(matriz):
+    while True:
+        try:
+            print("La matriz original: ")
+            print("")
+            mostrarMatriz(matriz)
+            print("")
+            print("La matriz tiene "+str(len(matriz[0]))+" columnas: "+str([numero for numero in range(0,(len(matriz[0])))]))
+            print("")
+            columnaA=int(input("Ingrese una fila para intercambiarla con otra: "))
+            columnaB=int(input("Ingrese la otra fila: "))
+            clear()
+            for fila in range(len(matriz)):
+                aux=matriz[fila][columnaA]
+                matriz[fila][columnaA]=matriz[fila][columnaB]
+                matriz[fila][columnaB]=aux
+            break
+        except ValueError:
+            print("Deben ingresarse números, reintente... ")
+        except IndexError:
+            print("Las filas ingresadas no existen, reintente... ")
 def __main__():
     #listarCuadrados()
     #print(superposicion([1,2,3],[4,5,6]))
@@ -92,11 +150,14 @@ def __main__():
     #print(eliminarPalabrasDeCadena(cadena,eliminar))
     #print(concatenar(1234,5678))
     #print(tomarImpares())
-    #matriz=crearMatriz()
-    #mostrarMatriz(matriz)
+    matriz=crearMatriz()
+    clear()
     #ordenarFilasMatriz(matriz)
-    #mostrarMatriz(matriz)
-    
+    #intercambiarFilas(matriz)
+    #intercambiarColumnasFacil(matriz)
+    intercambiarColumnasComplicado(matriz)
+    mostrarMatriz(matriz)
+
     
 if __name__=="__main__":
     __main__()
