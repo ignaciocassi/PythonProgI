@@ -141,6 +141,25 @@ def intercambiarColumnasComplicado(matriz):
             print("Deben ingresarse números, reintente... ")
         except IndexError:
             print("Las filas ingresadas no existen, reintente... ")
+            
+def intercambiarFilaporColumna(matriz):
+    """Solicita una fila y una columna de la matriz por teclado, y las intercambia."""
+    fila=int(input("Ingrese una fila: "))
+    columna=int(input("Ingrese una columna:"))
+    ultimafila=len(matriz[0])-1
+    for i in range(len(matriz)-1):
+        aux=matriz[fila][i]
+        matriz[fila][i]=matriz[ultimafila][columna]
+        matriz[ultimafila][columna]=aux
+        ultimafila-=1
+        
+def interponerMatriz(matriz):
+    for f in range(len(matriz)//2+1):
+        for c in range(len(matriz[0])):
+            aux=matriz[f][c]
+            matriz[f][c]=matriz[c][f]
+            matriz[c][f]=aux
+    
 def __main__():
     #listarCuadrados()
     #print(superposicion([1,2,3],[4,5,6]))
@@ -151,13 +170,14 @@ def __main__():
     #print(concatenar(1234,5678))
     #print(tomarImpares())
     matriz=crearMatriz()
-    clear()
     #ordenarFilasMatriz(matriz)
     #intercambiarFilas(matriz)
     #intercambiarColumnasFacil(matriz)
-    intercambiarColumnasComplicado(matriz)
+    #intercambiarColumnasComplicado(matriz)
+    #intercambiarFilaporColumna(matriz)
+    interponerMatriz(matriz)
     mostrarMatriz(matriz)
-
+    
     
 if __name__=="__main__":
     __main__()
