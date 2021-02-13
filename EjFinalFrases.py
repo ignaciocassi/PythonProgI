@@ -57,25 +57,58 @@ def crearMatriz(N=3):
         matriz.append([])
         for c in range(N):
             matriz[f].append(0)
-    fila=0
-    filas=1
-    contador=0
-    numero=1
-    while contador<N*N:
-        while contador<N:
-            matriz[][contador]=numero
-        fila+=1
-        filas+=1
-    mostrarMatriz(matriz)
     
+    total=N*N
+    contador=1
+    f=0
+    c=0
+    
+    #Primer elem
+    matriz[f][c]=contador
+    contador+=1
+    while(contador<=total):
+        try:
+            if contador%2==0:
+                #Si es par baja
+                matriz[f+1][c]=contador
+                contador+=1
+                f+=1
+            else:
+                #Si no es par va a la derecha
+                try:
+                    matriz[f-1][c+1]=contador
+                    contador+=1
+                    f-=1
+                    c+=1
+                except IndexError:
+                    print("Se sale de la matriz por la derecha. ")
+                    try:
+                        matriz[f+1][0]=contador
+                        contador+=1
+                        f+=1
+                        c=0
+                    except IndexError:
+                        print("Se sale de la matriz al saltar de línea.")
+        except IndexError:
+            print("Se sale de la matriz al bajar. ")
+            #Va a la derecha
+            #f-=1
+            while contador<=total:
+                matriz[f][c+1]=contador
+                contador+=1
+                c+=1
+    mostrarMatriz(matriz)
+        
+
 def mostrarMatriz(matriz):
     for fila in range(len(matriz)):
         print(matriz[fila])
+        
 def __main__():
     #Ejercicio 1
     print("Ejercicio 1: ")
     print("")
-    lineasarchivo=leerArchivo(r"C:\Users\Nacho\Desktop\frases.txt")
+    lineasarchivo=leerArchivo(r"C:\Users\Nacho\Desktop\Python\Práctica\ProgI\ProgI\frases.txt")
     lineas=obtenerLineas(lineasarchivo)
     datos=obtenerDatosLineas(lineas)
     mostrarDatosLineas(datos)
