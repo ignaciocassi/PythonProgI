@@ -52,12 +52,17 @@ def contarCaracteresRecursiva(cadena,caracteres=0):
         return contarCaracteresRecursiva(cadena,caracteres)
     
 def crearMatriz(N=3):
+    """Crea y devuelve una matriz con las dimensiones recibidas por parámetro: N*N"""
     matriz=[]
     for f in range(N):
         matriz.append([])
         for c in range(N):
             matriz[f].append(0)
-    
+    return matriz
+
+def zigzagMatriz(matriz):
+    """Recibe una matriz por parámetro y reemplaza sus valores"""
+    N=len(matriz)
     total=N*N
     contador=1
     f=0
@@ -81,42 +86,83 @@ def crearMatriz(N=3):
                     f-=1
                     c+=1
                 except IndexError:
-                    print("Se sale de la matriz por la derecha. ")
+                    #print("Se sale de la matriz por la derecha. ")
+                    pass
                     try:
                         matriz[f+1][0]=contador
                         contador+=1
                         f+=1
                         c=0
                     except IndexError:
-                        print("Se sale de la matriz al saltar de línea.")
+                        #print("Se sale de la matriz al saltar de línea.")
+                        pass
         except IndexError:
-            print("Se sale de la matriz al bajar. ")
+            #print("Se sale de la matriz al bajar. ")
+            pass
             #Va a la derecha
-            #f-=1
             while contador<=total:
                 matriz[f][c+1]=contador
                 contador+=1
                 c+=1
-    mostrarMatriz(matriz)
         
-
 def mostrarMatriz(matriz):
+    """Recibe una matriz por parámetro y la muestra fila por fila."""
     for fila in range(len(matriz)):
         print(matriz[fila])
         
+def sumaDeFilas(matriz):
+    sumaFilas=[sum(fila) for fila in matriz]
+    print(sumaFilas)
+    return sumaFilas
+
+def mostrarLista(lista):
+    print("")
+    print("Las sumas de los elementos de cada fila de la matriz son:")
+    print("")
+    for i in range(len(lista)):
+        print("Fila "+str(i)+" :"+str(lista[i])+".")
+
+def quitarRepetidosLista(lista,nuevalista=[],contador=0):
+    if contador==len(lista)-1:
+        return nuevalista
+    else:
+        item=lista[contador]
+        if item not in nuevalista:
+            nuevalista.append(item)
+        contador+=1
+        return quitarRepetidosLista(lista,nuevalista,contador)
+
 def __main__():
     #Ejercicio 1
+    print("")
     print("Ejercicio 1: ")
     print("")
+    
     lineasarchivo=leerArchivo(r"C:\Users\Nacho\Desktop\Python\Práctica\ProgI\ProgI\frases.txt")
     lineas=obtenerLineas(lineasarchivo)
     datos=obtenerDatosLineas(lineas)
     mostrarDatosLineas(datos)
-    print("")
     
     #Ejercicio 2
-    crearMatriz(4)
+    print("")
+    print("Ejercicio 2:")
+    print("")
     
+    matriz=crearMatriz(4)
+    zigzagMatriz(matriz)
+    mostrarMatriz(matriz)
+    listacomprension=sumaDeFilas(matriz)
+    mostrarLista(listacomprension)
+    
+    #Ejercicio 3
+    print("")
+    print("Ejercicio 3:")
+    print("")
+    
+    lista=[1,2,3,3,4,5,5,6]
+    print("Lista original: "+str(lista))
+    nuevalista=quitarRepetidosLista(lista)
+    print("Lista nueva sin repetidos: "+str(nuevalista))
     
 if __name__=="__main__":
     __main__()
