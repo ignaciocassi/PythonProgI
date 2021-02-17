@@ -19,8 +19,7 @@ def listarCuadrados():
                 if N!=-1:
                     lista=[]
                     for i in range(0,N):
-                        lista.append(i**3)
-                    print(lista[-10:])
+                        pass
                 else:
                     pass
                 break
@@ -77,6 +76,15 @@ def crearMatriz():
         matriz.append([])
         for columna in range(dimensiones):
             matriz[fila].append(int(input("Ingrese un número:")))
+    return matriz
+
+def crearMatrizFullCeros():
+    dimensiones=int(input("Ingrese el tamaño de la matriz: "))
+    matriz=[]
+    for fila in range(dimensiones):
+        matriz.append([])
+        for columna in range(dimensiones):
+            matriz[fila].append(0)
     return matriz
 
 def mostrarMatriz(matriz):
@@ -216,14 +224,15 @@ def simetriaDiagonalSecundariaMatriz(matriz):
 
 def columnasCapicuasMatriz(matriz):
     colCapicuas=[]
-    primero=0
-    ultimo=len(matriz[0])-1
-    for fila in range(len(matriz)):
-        for columna in range(len(matriz)//2):
-            if matriz[primero][columna]==matriz[ultimo][columna]:
+    for columna in range(len(matriz[0])):
+        primeraFila=0
+        capicua=False
+        ultimaFila=len(matriz)-1
+        while primeraFila<ultimaFila:
+            if matriz[primeraFila][columna]==matriz[ultimaFila][columna]:
+                primeraFila+=1
+                ultimaFila-=1
                 capicua=True
-                primero+=1
-                ultimo-=1
             else:
                 capicua=False
                 break
@@ -231,7 +240,45 @@ def columnasCapicuasMatriz(matriz):
             colCapicuas.append(columna)
     return colCapicuas
 
+def crearMatriz1():
+    matriz=crearMatrizFullCeros()
+    indice=0
+    valor=1
+    for fila in range(len(matriz)):
+        matriz[fila][indice]=valor
+        indice+=1
+        valor+=2
+    mostrarMatriz(matriz)
 
+def crearMatriz2():
+    matriz=crearMatrizFullCeros()
+    indice=len(matriz[0])-1
+    valor=27
+    for fila in range(len(matriz)):
+        matriz[fila][indice]=valor
+        indice-=1
+        valor=valor//3
+    mostrarMatriz(matriz)
+    
+def crearMatriz3():
+    matriz=crearMatrizFullCeros()
+    valor=4
+    limite=1
+    for fila in range(len(matriz)):
+        for col in range(limite):
+            matriz[fila][col]=valor
+        limite+=1
+        valor-=1
+    mostrarMatriz(matriz)
+
+def crearMatriz4():
+    matriz=crearMatrizFullCeros()
+    valor=1
+    for fila in range(len(matriz)-1,-1,-1):
+        for col in range(len(matriz[0])):
+            matriz[fila][col]=valor
+        valor=valor*2
+    mostrarMatriz(matriz)
 
 def __main__():
     #listarCuadrados()
@@ -249,7 +296,7 @@ def __main__():
     #intercambiarColumnasComplicado(matriz)
     #intercambiarFilaporColumna(matriz)
     #interponerMatriz(matriz)
-    matriz=crearMatriz()
+    #matriz=crearMatriz()
     #fila=int(input("Ingrese una fila para calcular su promedio: "))
     #promedio=calcularPromedioFila(matriz,fila)
     #print("El promedio de la fila "+str(fila)+" es: "+str(promedio)+".")
@@ -259,8 +306,25 @@ def __main__():
     #print("El porcentaje de items impares en la columna "+str(columna)+" es del "+str(porcentaje)+"%")
     #print(simetriaDiagonalPrincipalMatriz(matriz))
     #print(simetriaDiagonalSecundariaMatriz(matriz))
-    print(columnasCapicuasMatriz(matriz))
-    mostrarMatriz(matriz)
+    #print("Las columnas capicúas de la matriz son: "+str(columnasCapicuasMatriz(matriz)))
+    #mostrarMatriz(matriz)
+    #print("Matriz 1: ")
+    #print("")
+    #crearMatriz1()
+    #print("")
+    #print("Matriz 2: ")
+    #print("")
+    #crearMatriz2()
+    #print("")
+    #print("Matriz 3: ")
+    #print("")
+    #crearMatriz3()
+    #print("")
+    #print("Matriz 4: ")
+    #print("")
+    #crearMatriz4()
+    #print("")
+    crearMatriz5()
 
     
 if __name__=="__main__":
