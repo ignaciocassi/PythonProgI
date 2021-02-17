@@ -160,6 +160,79 @@ def interponerMatriz(matriz):
             matriz[f][c]=matriz[c][f]
             matriz[c][f]=aux
     
+"""Calcular el promedio de los elementos de una fila, cuyo número se recibe como
+parámetro."""
+def calcularPromedioFila(matriz,fila):
+    cantidad=0
+    suma=0
+    for numero in range(len(matriz[fila])):
+        cantidad+=1
+        suma+=matriz[fila][numero]
+    promedio=suma/cantidad
+    return promedio
+
+"""Calcular el porcentaje de elementos con valor impar en una columna, cuyo número se recibe como parámetro.
+"""
+def calcularPorcentajeImparEnColumna(matriz,columna):
+    total=0
+    impares=0
+    for i in range(len(matriz[0])):
+        if matriz[i][columna]%2!=0:
+            impares+=1
+        total+=1
+    porcentajeImpar=(impares*100)/total
+    return porcentajeImpar
+
+"""Determinar si la matriz es simétrica con respecto a su diagonal principal."""
+def simetriaDiagonalPrincipalMatriz(matriz):
+    simetria=True
+    primero=0
+    ultimo=len(matriz)-1
+    for i in range(len(matriz)//2):
+        if matriz[primero][primero]==matriz[ultimo][ultimo]:
+            simetria=True
+            primero+=1
+            ultimo-=1
+        else:
+            simetria=False
+            break
+    return simetria
+
+"""Determinar si la matriz es simétrica con respecto a su diagonal secundaria."""
+
+def simetriaDiagonalSecundariaMatriz(matriz):
+    simetria=True
+    primero=0
+    ultimo=len(matriz)-1
+    for i in range(len(matriz)//2):
+        if matriz[primero][ultimo]==matriz[ultimo][primero]:
+            primero+=1
+            ultimo-=1
+            simetria=True
+        else:
+            simetria=False
+            break
+    return simetria
+
+def columnasCapicuasMatriz(matriz):
+    colCapicuas=[]
+    primero=0
+    ultimo=len(matriz[0])-1
+    for fila in range(len(matriz)):
+        for columna in range(len(matriz)//2):
+            if matriz[primero][columna]==matriz[ultimo][columna]:
+                capicua=True
+                primero+=1
+                ultimo-=1
+            else:
+                capicua=False
+                break
+        if capicua==True:
+            colCapicuas.append(columna)
+    return colCapicuas
+
+
+
 def __main__():
     #listarCuadrados()
     #print(superposicion([1,2,3],[4,5,6]))
@@ -169,15 +242,26 @@ def __main__():
     #print(eliminarPalabrasDeCadena(cadena,eliminar))
     #print(concatenar(1234,5678))
     #print(tomarImpares())
-    matriz=crearMatriz()
+    #matriz=crearMatriz()
     #ordenarFilasMatriz(matriz)
     #intercambiarFilas(matriz)
     #intercambiarColumnasFacil(matriz)
     #intercambiarColumnasComplicado(matriz)
     #intercambiarFilaporColumna(matriz)
-    interponerMatriz(matriz)
+    #interponerMatriz(matriz)
+    matriz=crearMatriz()
+    #fila=int(input("Ingrese una fila para calcular su promedio: "))
+    #promedio=calcularPromedioFila(matriz,fila)
+    #print("El promedio de la fila "+str(fila)+" es: "+str(promedio)+".")
+    #columna=int(input("Ingrese una columna: "))
+    #porcentaje=calcularPorcentajeImparEnColumna(matriz,columna)
+    #porcentaje=round(porcentaje,2)
+    #print("El porcentaje de items impares en la columna "+str(columna)+" es del "+str(porcentaje)+"%")
+    #print(simetriaDiagonalPrincipalMatriz(matriz))
+    #print(simetriaDiagonalSecundariaMatriz(matriz))
+    print(columnasCapicuasMatriz(matriz))
     mostrarMatriz(matriz)
-    
+
     
 if __name__=="__main__":
     __main__()
