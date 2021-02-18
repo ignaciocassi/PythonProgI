@@ -79,7 +79,8 @@ def crearMatriz():
     return matriz
 
 def crearMatrizFullCeros():
-    dimensiones=int(input("Ingrese el tamaño de la matriz: "))
+    #dimensiones=int(input("Ingrese el tamaño de la matriz: "))
+    dimensiones=4
     matriz=[]
     for fila in range(dimensiones):
         matriz.append([])
@@ -280,6 +281,124 @@ def crearMatriz4():
         valor=valor*2
     mostrarMatriz(matriz)
 
+def crearMatriz5():
+    matriz=crearMatrizFullCeros()
+    valor=1
+    entrarEn0=False
+    for fila in matriz:
+        if entrarEn0==False:
+            for i in range(len(fila)):
+                if i%2==0:
+                    pass
+                else:
+                    fila[i]=valor
+                    valor+=1
+            entrarEn0=True
+        else:
+            for i in range(len(fila)):
+                if i%2==0:
+                    fila[i]=valor
+                    valor+=1
+                else:
+                    pass
+            entrarEn0=False
+    mostrarMatriz(matriz)
+
+def crearMatriz6():
+    matriz=crearMatrizFullCeros()
+    hasta=len(matriz)-2
+    valor=1
+    for fila in matriz:
+        for i in range(len(fila)-1,hasta,-1):
+            fila[i]=valor
+            valor+=1
+        hasta-=1
+    mostrarMatriz(matriz)
+
+def crearMatriz7():
+    matriz=crearMatrizFullCeros()
+    valor=1
+    fila=0
+    columna=0
+    while valor<=16:
+        while(columna<=len(matriz[0])-1 and matriz[fila][columna]==0):
+            matriz[fila][columna]=valor
+            valor+=1
+            if columna+1!=len(matriz[0]):
+                columna+=1
+        fila+=1
+        while(fila<=len(matriz)-1 and matriz[fila][columna]==0):
+            matriz[fila][columna]=valor
+            valor+=1
+            if fila+1!=len(matriz):
+                fila+=1
+        columna-=1
+        while(columna>=0 and matriz[fila][columna]==0):
+            matriz[fila][columna]=valor
+            valor+=1
+            if columna-1!=-1:
+                columna-=1
+        fila-=1
+        while(matriz[fila][columna]==0):
+            matriz[fila][columna]=valor
+            valor+=1
+            if matriz[fila-1][columna]==0:
+                fila-=1
+        columna+=1
+    mostrarMatriz(matriz)
+
+def cadenaCapicua(cadena):
+    capicua=False
+    primeraletra=0
+    ultimaletra=len(cadena)-1
+    while primeraletra<len(cadena)//2:
+        if cadena[primeraletra:primeraletra+1]==cadena[ultimaletra:ultimaletra-1:-1]:
+            capicua=True
+            primeraletra+=1
+            ultimaletra-=1
+        else:
+            capicua=False
+            break
+    return capicua
+
+def mostrarCadenaCentrada():
+    cadena=input("Ingrese una cadena para mostrarla centrada: ")
+    print(cadena.center(80," "))
+
+def obtenerClavesDeClaveMaestra():
+    claveMaestra=input("Ingrese la clave maestra: ")
+    clave1=claveMaestra[::2]
+    clave2=claveMaestra[1::2]
+    print(clave1)
+    print(clave2)
+
+def filtrarPalabrasNormal(frase,N):
+    palabras=frase.split(" ")
+    listaFraseFiltrada=[]
+    for palabra in palabras:
+        if len(palabra)>=N:
+            listaFraseFiltrada.append(palabra)
+    fraseFiltrada=" ".join(listaFraseFiltrada)
+    return fraseFiltrada
+
+def cantChars(palabra,N=4):
+    if len(palabra)>=N:
+        return True
+    else:
+        return False
+
+def filtrarPalabrasFilter(frase,N):
+    listaPalabras=frase.split(" ")
+    listaPalabrasFiltradas=list(filter(cantChars,listaPalabras))
+    fraseFiltrada=" ".join(listaPalabrasFiltradas)
+    return fraseFiltrada
+
+def filtrarPalabrasComprension(frase,N=4):
+    listaPalabras=frase.split(" ")
+    palabrasFiltradas=[palabra for palabra in listaPalabras if len(palabra)>=N]
+    fraseFiltrada=" ".join(palabrasFiltradas)
+    return fraseFiltrada
+
 def __main__():
     #listarCuadrados()
     #print(superposicion([1,2,3],[4,5,6]))
@@ -324,8 +443,28 @@ def __main__():
     #print("")
     #crearMatriz4()
     #print("")
-    crearMatriz5()
+    #print("Matriz 5: ")
+    #print("")
+    #crearMatriz5()
+    #print("")
+    #print("Matriz 6: ")
+    #print("")
+    #crearMatriz6()
+    #print("")
+    #print("Matriz 7: ")
+    #print("")
+    #crearMatriz7()
+    #print("")
+    #print("Matriz 8: ")
+    #print("")
+    #crearMatriz8()
+    #print("")
+    #print(cadenaCapicua("abcdcba"))
+    #mostrarCadenaCentrada()
+    #obtenerClavesDeClaveMaestra()
+    #print(filtrarPalabrasNormal("Hola soy Nacho",4))
+    #print(filtrarPalabrasFilter("Hola soy Nacho",4))
+    #print(filtrarPalabrasComprension("Hola soy Nacho",4))
 
-    
 if __name__=="__main__":
     __main__()
