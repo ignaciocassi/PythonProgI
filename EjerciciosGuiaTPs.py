@@ -399,7 +399,50 @@ def filtrarPalabrasComprension(frase,N=4):
     fraseFiltrada=" ".join(palabrasFiltradas)
     return fraseFiltrada
 
+def extraerSubcadena(cadena,posSubcadena,cantCaractSubcadena):
+    subcadena=cadena[posSubcadena:posSubcadena+cantCaractSubcadena]
+    return subcadena
+
+def extraerSubcadenaSinRebanadas(cadena,posSubcadena,cantCaractSubcadena):
+    contador=0
+    listaLetrasSubcadena=[]
+    subadena=""
+    for letra in cadena:
+        if contador>=posSubcadena and contador<=posSubcadena+cantCaractSubcadena:
+            listaLetrasSubcadena.append(letra)
+            contador+=1
+        else:
+            contador+=1
+    subcadena="".join(listaLetrasSubcadena)
+    return subcadena
+
+def eliminarSubcadena(cadena,posSubcadena,cantCaractSubcadena):
+    listaLetrasCadena=list(cadena)
+    print(listaLetrasCadena)
+    listaLetrasCadena[posSubcadena:posSubcadena+cantCaractSubcadena]=[]
+    subcadena="".join(listaLetrasCadena)
+    return subcadena
+
+def controlarEspaciosYOrdernarPalabras(cadena):
+    lista=cadena.split()
+    lista.sort()
+    cadenaControlada=" ".join(lista)
+    return cadenaControlada
+
+def contarLetrasyNum(cadena):
+    letras=0
+    numeros=0
+    for letra in cadena:
+        if letra.isalpha():
+            letras+=1
+        elif letra.isdigit():
+            numeros+=1
+    return letras,numeros
+
+
+
 def __main__():
+    
     #listarCuadrados()
     #print(superposicion([1,2,3],[4,5,6]))
     #print(sumaAcumulada([1,2,3,4,5]))
@@ -465,6 +508,16 @@ def __main__():
     #print(filtrarPalabrasNormal("Hola soy Nacho",4))
     #print(filtrarPalabrasFilter("Hola soy Nacho",4))
     #print(filtrarPalabrasComprension("Hola soy Nacho",4))
+    #cadena="El número de teléfono es 4356-7890"
+    #posSubcadena=25
+    #cantCaractSubcadena=9
+    #print(eliminarSubcadena(cadena,posSubcadena,cantCaractSubcadena))
+    #cadenaControlada=controlarEspaciosYOrdernarPalabras("hola soy  nacho  ahre    xd")
+    #print(cadenaControlada)
+    #cadena="letras 1234"
+    #letras,numeros=contarLetrasyNum(cadena)
+    #print("En la cadena '"+cadena+"' hay "+str(letras)+" letras y "+str(numeros)+" numeros.")
 
+    
 if __name__=="__main__":
     __main__()
