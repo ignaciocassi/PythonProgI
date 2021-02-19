@@ -1,6 +1,15 @@
 from random import randint
 import os
 
+class NumeroNegativo(Exception):
+    pass
+
+class NumeroNoEntero(Exception):
+    pass
+
+class numMesInvalido(Exception):
+    pass
+
 def clear():
     os.system("cls")
 
@@ -439,6 +448,56 @@ def contarLetrasyNum(cadena):
             numeros+=1
     return letras,numeros
 
+def obtenerNumeroNatural():
+    while True:
+        try:
+            numNatural=int(input("Ingrese un número natural y positivo: "))
+            if numNatural<=0:
+                raise NumeroNegativo
+            elif not numNatural.isdecimal():
+                raise NumeroNoEntero
+            break
+        except ValueError:
+            print("Debe ingresarse un número, reintente... ")
+        except NumeroNegativo:
+            print("El número debe ser positivo, reintente... ")
+        except NumeroNoEntero:
+            print("Debe ingresarse un número entero, reintente... ")
+    return numNatural
+
+def sumarAB(cadA,cadB):
+    try:
+        numA=int(cadA)
+        numB=int(cadB)
+        suma=numA+numB
+        return suma
+    except ValueError:
+        return -1
+    
+def obtenerMes(numMes):
+    try:
+        meses=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+        if numMes<1 or numMes>12:
+            raise numMesInvalido
+        nombreMes=meses[numMes-1]
+        return nombreMes
+    except numMesInvalido:
+        return ""
+
+def mostrar100000():
+    numero=1
+    while True:
+        try:
+            while numero<=100000:
+                print(numero)
+                numero+=1
+        except KeyboardInterrupt:
+            entrada=input("Desea salir del programa? Y/N")
+            if entrada=="Y":
+                print("Saliendo del programa")
+                break
+            else:
+                pass
 
 
 def __main__():
@@ -516,8 +575,12 @@ def __main__():
     #print(cadenaControlada)
     #cadena="letras 1234"
     #letras,numeros=contarLetrasyNum(cadena)
-    #print("En la cadena '"+cadena+"' hay "+str(letras)+" letras y "+str(numeros)+" numeros.")
+    #print("En la cadena '"+cadena+"' hay "+str(letras)+" letras y "+str(numeros)+" numeros.") 
+    #numNatural=obtenerNumeroNatural()
+    #print(numNatural)
+    #print(sumarAB(input("Cadena num A"),input("Cadena num B")))
+    #print(obtenerMes(int(input("Num mes: "))))
+    mostrar100000()
 
-    
 if __name__=="__main__":
     __main__()
