@@ -1,47 +1,56 @@
 class MesInvalido(Exception):
     pass
 
-def generarInformeMes(directorio,mes):
-    """Recibe el directorio del archivo fuente y el número de mes para bsucar las ventas que se hayan generado en el mismo.
-    Luego para cada venta que corresponda al mes buscado, agrega su información a la estructura de datos Informe:
-    Luego devuelve el informe.
-    Elegí una lista de tuplas porque considero que es until poder separar los datos de cada registro, y poder acceder a cada dato mediante un índice."""
+class VendedorInvalido(Exception):
+    pass
 
+class CodigoProductoInvalido(Exception):
+    pass
+
+def generarInformeMes(directorio,mes):
     try:
         arch=open(directorio,"rt")
         linea=arch.readline()
-        informe=[]
+        diccVentasTotales=dict()
         while linea:
-            linea=linea.replace("\n","")
-            mesVenta=int(linea[10:12])
-            if mesVenta==mes:
+            if int(linea[10:12])==mes:
+                linea=linea.replace("\n","")
                 numVendedor=linea[0:2]
-                codProducto=int(linea[2:4])
-                cantVendida=int(linea[4:8])
-                informe.append((numVendedor,codProducto,cantVendida))
+                if (int(numVendedor)<0 or int(numVendedor)>15):
+                    raise VendedorInvalido
+                codProd=linea[2:4]
+                if (int(codProd)<1 or int(codProd)>99):
+                    raise CodigoProductoInvalido
+                unidVendidas=int(linea[4:8])
+                diaVenta=int(linea[8:10])
+                mesVenta=int(linea[10:12])
+                añoVenta=int(linea[12:16])
+                if str(numVendedor)+str(codProd) not in diccVentasTotales.keys():
+                    diccVentasTotales[numVendedor+codProd]=unidVendidas
+                else:
+                    diccVentasTotales[numVendedor+codProd]+=unidVendidas
             linea=arch.readline()
-        return informe,mes
+        return diccVentasTotales,mes
     except IOError:
-        print("Error al intentar abrir el archivo. ")
+        print("Error al intentar abrir el archivo.")
+    except VendedorInvalido:
+        print("El vendedor debe estar entre 0 y 15.")
+    except CodigoProductoInvalido:
+        print("El código del producto debe estar entre 0 y 99.")
     finally:
         try:
             arch.close()
         except:
             pass
         
-def mostrarInforme(informe,mes):
-    """Recibe el informe generado anteriormente y el número de mes para obtener el nombre del mes correspondiente.
-    Luego para cada elemento en el informe, muestra la información recopilada de forma clara y legible."""
-
+def mostrarVentasTotales(diccVentasTotales,mes):
     meses=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
-
     restar1=lambda x:x-1
     print("Informe de ventas para el mes de "+meses[restar1(mes)]+": ")
     print(" ")
-    for i in range(len(informe)):
-        #print("N° de vendedor: "+str(informe[i][0])+" Cód. de producto: "+str(informe[i][1])+" Cantidad vendida: "+str(informe[i][2])+".")
-        print("N° de vendedor: "+str(informe[i][0])+" Cód. de producto: "+str(informe[i][1])+" Cantidad vendida: "+str(informe[i][2])+".")
-    
+    for clave in diccVentasTotales.keys():
+        print("El número de vendedor "+clave[0:2]+" vendió "+str(diccVentasTotales.get(clave))+" unidades del artículo "+clave[2:4]+" en el mes de "+meses[restar1(mes)]+".")
+
 def solicitarDatos():
     """Solicita por teclado el número del mes para generar el informe, verifica que sea un mes válido y finalmente solicita el directorio del archivo fuente."""
     while True:
@@ -49,27 +58,18 @@ def solicitarDatos():
             mes=int(input("Ingrese el mes para generar el informe de ventas: "))
             if mes<0 or mes>12:
                 raise MesInvalido
-            elif mes==-1:
-                break
             break
         except MesInvalido:
             print("El número de mes ingresado no es válido, reintente: ")
         except ValueError:
             print("El número de mes ingresado no es válido, reintente: ")
-    while True:
-        try:
-            directorio=input("Ingrese el directorio del archivo de ventas: ")
-            break
-        except IOError:
-            print("Error al intentar abrir el archivo. (directorio inválido)")
-        except TypeError:
-            print("No se ha encontrado el archivo especificado, reintente: ")
+    directorio=input("Ingrese el directorio del archivo de ventas: ")
     return directorio,mes
 
 def __main__():
     directorio,mes=solicitarDatos()
-    informe,mes=generarInformeMes(directorio,mes)
-    mostrarInforme(informe,mes)
+    diccVentasTotales,mes=generarInformeMes(directorio,mes)
+    mostrarVentasTotales(diccVentasTotales,mes)
 
 if __name__=="__main__":
     __main__()
